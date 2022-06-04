@@ -24,6 +24,7 @@ btn6 = StringVar()
 btn7 = StringVar()
 btn8 = StringVar()
 btn9 = StringVar()
+btn10 = StringVar()
 
 xPhoto = PhotoImage(file='X.png')
 oPhoto = PhotoImage(file='O.png')
@@ -38,6 +39,7 @@ def play():
     button7 = Button(root,height=9,width=19,bd=0.95,relief='ridge',bg='#ffcc33',textvariable=btn7,command=lambda:press(7,2,0))
     button8 = Button(root,height=9,width=19,bd=0.95,relief='ridge',bg='#ffcc33',textvariable=btn8,command=lambda:press(8,2,1))
     button9 = Button(root,height=9,width=19,bd=0.95,relief='ridge',bg='#ffcc33',textvariable=btn9,command=lambda:press(9,2,2))
+    
     button1.grid(row=0,column=0)
     button2.grid(row=0,column=1)
     button3.grid(row=0,column=2)
@@ -60,8 +62,28 @@ def press(num,r,c):
                 btn5.set('O')
             elif (move==[2]):
                 btn3.set('O')
+            elif (move==[3]):
+                btn2.set('O')
             elif (move==[4]):
                 btn7.set('O')
+            elif (move==[6]):
+                btn3.set('O')
+            elif (move==[7]):
+                btn4.set('O')
+            elif (move==[8]):
+                btn7.set('O')
+            elif (move==[3,9])or(move==[9,3]):
+                btn4.set('O')
+            elif (move==[7,9])or(move==[9,7]):
+                btn2.set('O')
+            elif (move==[6,9])or(move==[9,6]):
+                btn7.set('O')
+            elif (move==[9,8])or(move==[8,9]):
+                btn3.set('O')
+            elif (move==[9,2])or(move==[2,9]):
+                btn7.set('O')
+            elif (move==[9,4])or(move==[4,9]):
+                btn3.set('O')
             move=[*move,1]
             print(move)
         if num == 2:
@@ -70,7 +92,35 @@ def press(num,r,c):
                 btn5.set('O')
             elif (move==[1]):
                 btn3.set('O')
+            elif (move==[3]):
+                btn1.set('O')
+            elif (move==[9]):
+                btn3.set('O')
             elif (move==[1,4])or(move==[4,1]):
+                btn3.set('O')
+            elif (move==[1,7])or(move==[7,1]):
+                btn6.set('O')
+            elif (move==[3,9])or(move==[9,3]):
+                btn4.set('O')
+            elif (move==[3,6])or(move==[6,3]):
+                btn1.set('O')
+            elif (move==[6,9])or(move==[9,6]):
+                btn7.set('O')
+            elif (move==[9,8])or(move==[8,9]):
+                btn3.set('O')
+            elif (move==[7,8])or(move==[8,7]):
+                btn1.set('O')
+            elif (move==[7,4])or(move==[4,7]):
+                btn9.set('O')
+            elif (move==[1,8])or(move==[8,1]):
+                btn3.set('O')
+            elif (move==[1,6])or(move==[6,1]):
+                btn7.set('O')
+            elif (move==[3,4])or(move==[4,3]):
+                btn9.set('O')
+            elif (move==[3,8])or(move==[8,3]):
+                btn1.set('O')
+            elif (move==[9,4])or(move==[4,9]):
                 btn3.set('O')
             print(move)
             move=[*move,2]
@@ -80,13 +130,64 @@ def press(num,r,c):
             btn3.set('X')
             if (move==[]):
                 btn5.set('O')
+            elif (move==[1]):
+                btn2.set('O')
+            elif (move==[2]):
+                btn1.set('O')
+            elif (move==[4]):
+                btn1.set('O')
+            elif (move==[6]):
+                btn9.set('O')
+            elif move==[8]:
+                btn9.set('O')
+            elif (move==[9]):
+                btn6.set('O')
+            elif (move==[1,7])or(move==[7,1]):
+                btn6.set('O')
+            elif (move==[7,9])or(move==[9,7]):
+                btn2.set('O')
+            elif (move==[9,8])or(move==[8,9]):
+                btn3.set('O')
+            elif (move==[7,8])or(move==[8,7]):
+                btn1.set('O')
+            elif (move==[7,4])or(move==[4,7]):
+                btn9.set('O')
+            move=[*move,3]
         if num == 4:
             btn4.set('X')
             if (move==[]):
                 btn5.set('O')
             elif (move==[1]):
                 btn7.set('O')
+            elif (move==[3]):
+                btn1.set('O')
+            elif (move==[7]):
+                btn1.set('O')
+            elif (move==[9]):
+                btn7.set('O')
             elif (move==[1,2])or(move==[2,1]):
+                btn7.set('O')
+            elif (move==[1,3])or(move==[3,1]):
+                btn8.set('O')
+            elif (move==[7,9])or(move==[9,7]):
+                btn2.set('O')
+            elif (move==[2,3])or(move==[3,2]):
+                btn9.set('O')
+            elif (move==[3,6])or(move==[6,3]):
+                btn1.set('O')
+            elif (move==[6,9])or(move==[9,6]):
+                btn7.set('O')
+            elif (move==[9,8])or(move==[8,9]):
+                btn3.set('O')
+            elif (move==[7,8])or(move==[8,7]):
+                btn1.set('O')
+            elif (move==[1,8])or(move==[8,1]):
+                btn3.set('O')
+            elif (move==[1,6])or(move==[6,1]):
+                btn7.set('O')
+            elif (move==[3,8])or(move==[8,3]):
+                btn1.set('O')
+            elif (move==[9,2])or(move==[2,9]):
                 btn7.set('O')
             move=[*move,4]
         if num == 5:
@@ -95,12 +196,134 @@ def press(num,r,c):
             btn1.set('O')
         if num == 6:
             btn6.set('X')
+            if move==[]:
+                btn5.set('O')
+            elif (move==[1]):
+                btn3.set('O')
+            elif move==[3]:
+                btn9.set('O')
+            elif move==[9]:
+                btn3.set('O')
+            elif (move==[1,2])or(move==[2,1]):
+                btn7.set('O')
+            elif (move==[1,3])or(move==[3,1]):
+                btn8.set('O')
+            elif (move==[1,4])or(move==[4,1]):
+                btn3.set('O')
+            elif (move==[1,7])or(move==[7,1]):
+                btn6.set('O')
+            elif (move==[7,9])or(move==[9,7]):
+                btn2.set('O')
+            elif (move==[2,3])or(move==[3,2]):
+                btn9.set('O')
+            elif (move==[9,8])or(move==[8,9]):
+                btn3.set('O')
+            elif (move==[7,8])or(move==[8,7]):
+                btn1.set('O')
+            elif (move==[7,4])or(move==[4,7]):
+                btn9.set('O')
+            elif (move==[1,8])or(move==[8,1]):
+                btn3.set('O')
+            elif (move==[3,4])or(move==[4,3]):
+                btn9.set('O')
+            elif (move==[3,8])or(move==[8,3]):
+                btn1.set('O')
+            elif (move==[9,2])or(move==[2,9]):
+                btn7.set('O')
+            elif (move==[9,4])or(move==[4,9]):
+                btn3.set('O')
+            move=[*move,6]
         if num == 7:
             btn7.set('X')
+            if move==[]:
+                btn5.set('O')
+            elif (move==[4]):
+                btn1.set('O')
+            elif move==[8]:
+                btn9.set('O')
+            elif move==[9]:
+                btn8.set('O')
+            elif (move==[1,3])or(move==[3,1]):
+                btn8.set('O')
+            elif (move==[1]):
+                btn4.set('O')
+            elif (move==[3,9])or(move==[9,3]):
+                btn4.set('O')
+            elif (move==[2,3])or(move==[3,2]):
+                btn9.set('O')
+            elif (move==[3,6])or(move==[6,3]):
+                btn1.set('O')
+            elif (move==[3,4])or(move==[4,3]):
+                btn9.set('O')
+            elif (move==[3,8])or(move==[8,3]):
+                btn1.set('O')
+            move=[*move,7]
         if num == 8:
             btn8.set('X')
+            if move==[]:
+                btn5.set('O')
+            elif move==[1]:
+                btn7.set('O')
+            elif move==[3]:
+                btn9.set('O')
+            elif move==[7]:
+                btn9.set('O')
+            elif move==[9]:
+                btn7.set('O')
+            elif (move==[1,2])or(move==[2,1]):
+                btn7.set('O')
+            elif (move==[1,4])or(move==[4,1]):
+                btn3.set('O')
+            elif (move==[1,7])or(move==[7,1]):
+                btn6.set('O')
+            elif (move==[3,9])or(move==[9,3]):
+                btn4.set('O')
+            elif (move==[2,3])or(move==[3,2]):
+                btn9.set('O')
+            elif (move==[3,6])or(move==[6,3]):
+                btn1.set('O')
+            elif (move==[6,9])or(move==[9,6]):
+                btn7.set('O')
+            elif (move==[7,4])or(move==[4,7]):
+                btn9.set('O')
+            elif (move==[1,6])or(move==[6,1]):
+                btn7.set('O')
+            elif (move==[3,4])or(move==[4,3]):
+                btn9.set('O')
+            elif (move==[9,2])or(move==[2,9]):
+                btn7.set('O')
+            elif (move==[9,4])or(move==[4,9]):
+                btn3.set('O')
+            move=[*move,8]
         if num == 9:
             btn9.set('X')
+            if move==[]:
+                btn5.set('O')
+            elif (move==[2]):
+                btn3.set('O')
+            elif move==[3]:
+                btn6.set('O')
+            elif (move==[4]):
+                btn7.set('O')
+            elif move==[6]:
+                btn3.set('O')
+            elif move==[7]:
+                btn8.set('O')
+            elif move==[8]:
+                btn7.set('O')
+            elif (move==[1,2])or(move==[2,1]):
+                btn7.set('O')
+            elif (move==[1,4])or(move==[4,1]):
+                btn3.set('O')
+            elif (move==[1,3])or(move==[3,1]):
+                btn8.set('O')
+            elif (move==[1,7])or(move==[7,1]):
+                btn6.set('O')
+            elif (move==[1,8])or(move==[8,1]):
+                btn3.set('O')
+            elif (move==[1,6])or(move==[6,1]):
+                btn7.set('O')
+            move=[*move,9]
         count+=1
         #click = False
         checkWin()
@@ -166,6 +389,8 @@ def checkWin():
         play()
 
 def clear():
+    global move
+    move=[]
     btn1.set("")
     btn2.set("")
     btn3.set("")
@@ -175,7 +400,6 @@ def clear():
     btn7.set("")
     btn8.set("")
     btn9.set("")
-    move=[]
     
 play()
     
