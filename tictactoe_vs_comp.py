@@ -95,6 +95,23 @@ def press(num,r,c):
             elif (Xmove==[3,7])or(Xmove==[7,3]):
                 btn4.set('O')
             #two moves wins above this
+            elif (Xmove==[3,6])or(Xmove==[6,3]):
+                btn2.set('O')
+            elif (Xmove==[7,8])or(Xmove==[8,7]):
+                btn4.set('O')
+            elif (Xmove==[3,8])or(Xmove==[8,3]):
+                btn2.set('O')
+            elif (Xmove==[7,6])or(Xmove==[6,7]):
+                btn4.set('O')
+            elif (Xmove==[9,6,7])or(Xmove==[6,9,7]):
+                btn2.set('O')
+            elif (Xmove==[9,8,3])or(Xmove==[8,9,3]):
+                btn4.set('O')
+            elif (Xmove==[3,9,4])or(Xmove==[9,3,4]):
+                btn8.set('O')
+            elif (Xmove==[9,7,2])or(Xmove==[7,9,2]):
+                btn6.set('O')
+            #three moves wins above this
             Xmove=[*Xmove,1]
             print(Xmove)
         if num == 2:
@@ -156,9 +173,20 @@ def press(num,r,c):
             elif (Xmove==[4,6])or(Xmove==[6,4]):
                 btn9.set('O')
             #two moves wins above this
+            elif (Xmove==[9,7])or(Xmove==[7,9]):
+                btn4.set('O')
+            elif (Xmove==[8,9,3])or(Xmove==[9,8,3]):
+                btn4.set('O')
+            elif (Xmove==[7,8,1])or(Xmove==[8,7,1]):
+                btn6.set('O')
+            elif (Xmove==[1,9,6])or(Xmove==[9,1,6]):
+                btn7.set('O')
+            elif (Xmove==[3,7,4])or(Xmove==[7,3,4]):
+                btn9.set('O')
+            #three moves wins above this
             Xmove=[*Xmove,2]
             print(Xmove)
-            print(type(Xmove))
+            #print(type(Xmove))
         if num == 3:
             btn3.set('X')
             if (Xmove==[]):
@@ -181,8 +209,6 @@ def press(num,r,c):
                 btn6.set('O')
             elif (Xmove==[7,9])or(Xmove==[9,7]):
                 btn2.set('O')
-            elif (Xmove==[9,8])or(Xmove==[8,9]):
-                btn3.set('O')
             elif (Xmove==[7,8])or(Xmove==[8,7]):
                 btn1.set('O')
             elif (Xmove==[7,4])or(Xmove==[4,7]):
@@ -202,7 +228,25 @@ def press(num,r,c):
             elif (Xmove==[4,6])or(Xmove==[6,4]):
                 btn9.set('O')
             #two moves wins above this
+            elif (Xmove==[1,4])or(Xmove==[4,1]):
+                btn2.set('O')
+            elif (Xmove==[1,8])or(Xmove==[8,1]):
+                btn2.set('O')
+            elif (Xmove==[9,8])or(Xmove==[8,9]):
+                btn6.set('O')
+            elif (Xmove==[9,4])or(Xmove==[4,9]):
+                btn6.set('O')
+            elif (Xmove==[7,8,1])or(Xmove==[8,7,1]):
+                btn6.set('O')
+            elif (Xmove==[7,4,9])or(Xmove==[4,7,9]):
+                btn2.set('O')
+            elif (Xmove==[9,7,2])or(Xmove==[7,9,2]):
+                btn6.set('O')
+            elif (Xmove==[1,7,6])or(Xmove==[7,1,6]):
+                btn8.set('O')
+            #three moves wins above this
             Xmove=[*Xmove,3]
+            print(Xmove)
         if num == 4:
             btn4.set('X')
             if (Xmove==[]):
@@ -256,7 +300,17 @@ def press(num,r,c):
             elif (Xmove==[2,8])or(Xmove==[8,2]):
                 btn9.set('O')
             #two moves wins above this
+            elif (Xmove==[3,9])or(Xmove==[9,3]):
+                btn2.set('O')
+            elif (Xmove==[3,7])or(Xmove==[7,3]):
+                btn1.set('O')
+            elif (Xmove==[3,6,1])or(Xmove==[6,3,1]):
+                btn8.set('O')
+            elif (Xmove==[9,6,7])or(Xmove==[6,9,7]):
+                btn2.set('O')
+            #three moves wins above this
             Xmove=[*Xmove,4]
+            print(Xmove)
         if num == 5:
             btn5.set('X')
             Xmove=num
@@ -285,8 +339,6 @@ def press(num,r,c):
                 btn8.set('O')
             elif (Xmove==[1,4])or(Xmove==[4,1]):
                 btn3.set('O')
-            elif (Xmove==[1,7])or(Xmove==[7,1]):
-                btn6.set('O')
             elif (Xmove==[7,9])or(Xmove==[9,7]):
                 btn2.set('O')
             elif (Xmove==[2,3])or(Xmove==[3,2]):
@@ -316,7 +368,21 @@ def press(num,r,c):
             elif (Xmove==[2,8])or(Xmove==[8,2]):
                 btn9.set('O')
             #two moves wins above this
+            elif (Xmove==[1,7])or(Xmove==[7,1]):
+                btn2.set('O')
+            elif (Xmove==[1,9])or(Xmove==[9,1]):
+                btn3.set('O')
+            elif (Xmove==[1,4,3])or(Xmove==[4,1,3]):
+                btn8.set('O')
+            elif (Xmove==[7,4,9])or(Xmove==[4,7,9]):
+                btn2.set('O')
+            elif (Xmove==[3,4,9])or(Xmove==[4,3,9]):
+                btn2.set('O')
+            #three moves wins above this
+            elif (Xmove==[1,3,8])or(Xmove==[3,1,8]):
+                btn9.set('O')
             Xmove=[*Xmove,6]
+            print(Xmove)
         if num == 7:
             btn7.set('X')
             if Xmove==[]:
@@ -358,7 +424,27 @@ def press(num,r,c):
             elif (Xmove==[4,6])or(Xmove==[6,4]):
                 btn9.set('O')
             #two moves wins above this
+            elif (Xmove==[1,2])or(Xmove==[2,1]):
+                btn4.set('O')
+            elif (Xmove==[1,6])or(Xmove==[6,1]):
+                btn4.set('O')
+            elif (Xmove==[9,2])or(Xmove==[2,9]):
+                btn8.set('O')
+            elif (Xmove==[9,6])or(Xmove==[6,9]):
+                btn8.set('O')
+            elif (Xmove==[3,2,9])or(Xmove==[2,3,9]):
+                btn4.set('O')
+            elif (Xmove==[3,6,1])or(Xmove==[6,3,1]):
+                btn8.set('O')
+            elif (Xmove==[1,3,8])or(Xmove==[3,1,8]):
+                btn6.set('O')
+            elif (Xmove==[3,9,4])or(Xmove==[9,3,4]):
+                btn8.set('O')
+            elif (Xmove==[3,4,9])or(Xmove==[4,3,9]):
+                btn2.set('O')
+            #three moves wins above this
             Xmove=[*Xmove,7]
+            print(Xmove)
         if num == 8:
             btn8.set('X')
             if Xmove==[]:
@@ -416,7 +502,23 @@ def press(num,r,c):
             elif (Xmove==[4,6])or(Xmove==[6,4]):
                 btn9.set('O')
             #two moves wins above this
+            elif (Xmove==[1,3])or(Xmove==[3,1]):
+                btn4.set('O')
+            elif (Xmove==[1,2,7])or(Xmove==[2,1,7]):
+                btn6.set('O')
+            elif (Xmove==[3,2,9])or(Xmove==[2,3,9]):
+                btn4.set('O')
+            elif (Xmove==[1,9,6])or(Xmove==[9,1,6]):
+                btn7.set('O')
+            elif (Xmove==[3,7,4])or(Xmove==[7,3,4]):
+                btn9.set('O')
+            #three moves wins above this
+            elif (Xmove==[1,7,6])or(Xmove==[7,1,6]):
+                btn9.set('O')
+            elif (Xmove==[3,9,4])or(Xmove==[4,9,3]):
+                btn7.set('O')
             Xmove=[*Xmove,8]
+            print(Xmove)
         if num == 9:
             btn9.set('X')
             if Xmove==[]:
@@ -454,7 +556,25 @@ def press(num,r,c):
             elif (Xmove==[3,7])or(Xmove==[7,3]):
                 btn4.set('O')
             #two moves wins above this
+            elif (Xmove==[3,2])or(Xmove==[2,3]):
+                btn6.set('O')
+            elif (Xmove==[7,4])or(Xmove==[4,7]):
+                btn8.set('O')
+            elif (Xmove==[3,4])or(Xmove==[4,3]):
+                btn6.set('O')
+            elif (Xmove==[7,2])or(Xmove==[2,7]):
+                btn8.set('O')
+            elif (Xmove==[1,4,3])or(Xmove==[4,1,3]):
+                btn8.set('O')
+            elif (Xmove==[1,2,7])or(Xmove==[2,1,7]):
+                btn6.set('O')
+            elif (Xmove==[1,3,8])or(Xmove==[3,1,8]):
+                btn6.set('O')
+            elif (Xmove==[1,7,6])or(Xmove==[7,1,6]):
+                btn8.set('O')
+            #three moves wins above this
             Xmove=[*Xmove,9]
+            print(Xmove)
         count+=1
         #click = False
         checkWin()
@@ -513,7 +633,7 @@ def checkWin():
         clear()
         play()
     
-    elif(count==9):
+    elif(count==5):
         tkinter.messagebox.showinfo('tic tac toe','ITS A DRAW!')
         count =  0
         clear()
