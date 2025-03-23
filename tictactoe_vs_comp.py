@@ -1,657 +1,196 @@
 from tkinter import *
 import tkinter.messagebox
 
+# Initialize Tkinter window
 root = Tk()
+root.title('Tic Tac Toe')
+root.resizable(False, False)
+try:
+    root.iconbitmap('tictactoe.ico')
+except:
+    pass  # Ignore if icon file is missing
 
-root.iconbitmap('tictactoe.ico')
-
-root.title('tic tac toe')
-
-root.resizable(False,False)
-
-click = True
-
-count = 0
-
+# Game state variables
+click = True  # X starts first
+count = 0  # Move counter
 Xmove = []
 Omove = []
 move_all = []
 
-btn1 = StringVar()
-btn2 = StringVar()
-btn3 = StringVar()
-btn4 = StringVar()
-btn5 = StringVar()
-btn6 = StringVar()
-btn7 = StringVar()
-btn8 = StringVar()
-btn9 = StringVar()
-btn10 = StringVar()
+# Load images for X and O
+try:
+    xPhoto = PhotoImage(file='X.png')
+    oPhoto = PhotoImage(file='O.png')
+    # Create a blank image for empty buttons
+    emptyPhoto = PhotoImage(width=100, height=100)
+except Exception as e:
+    print(f"Error loading images: {e}")
+    # Fallback to text if images fail to load
+    xPhoto = None
+    oPhoto = None
+    emptyPhoto = None
 
-xPhoto = PhotoImage(file='X.png')
-oPhoto = PhotoImage(file='O.png')
+# Store button references
+btn = {}  # Dictionary to store button references
 
-def play():
-    button1 = Button(root,height=9,width=19,bd=0.95,relief='ridge',bg='#ffcc99',textvariable=btn1,command=lambda:press(1,0,0))
-    button2 = Button(root,height=9,width=19,bd=0.95,relief='ridge',bg='#ffcc99',textvariable=btn2,command=lambda:press(2,0,1))
-    button3 = Button(root,height=9,width=19,bd=0.95,relief='ridge',bg='#ffcc99',textvariable=btn3,command=lambda:press(3,0,2))
-    button4 = Button(root,height=9,width=19,bd=0.95,relief='ridge',bg='#ffcc66',textvariable=btn4,command=lambda:press(4,1,0))
-    button5 = Button(root,height=9,width=19,bd=0.95,relief='ridge',bg='#ffcc66',textvariable=btn5,command=lambda:press(5,1,1))
-    button6 = Button(root,height=9,width=19,bd=0.95,relief='ridge',bg='#ffcc66',textvariable=btn6,command=lambda:press(6,1,2))
-    button7 = Button(root,height=9,width=19,bd=0.95,relief='ridge',bg='#ffcc33',textvariable=btn7,command=lambda:press(7,2,0))
-    button8 = Button(root,height=9,width=19,bd=0.95,relief='ridge',bg='#ffcc33',textvariable=btn8,command=lambda:press(8,2,1))
-    button9 = Button(root,height=9,width=19,bd=0.95,relief='ridge',bg='#ffcc33',textvariable=btn9,command=lambda:press(9,2,2))
-    
-    button1.grid(row=0,column=0)
-    button2.grid(row=0,column=1)
-    button3.grid(row=0,column=2)
-    button4.grid(row=1,column=0)
-    button5.grid(row=1,column=1)
-    button6.grid(row=1,column=2)
-    button7.grid(row=2,column=0)
-    button8.grid(row=2,column=1)
-    button9.grid(row=2,column=2)
+# Winning conditions
+winning_positions = [
+    [1, 2, 3], [4, 5, 6], [7, 8, 9],  # Rows
+    [1, 4, 7], [2, 5, 8], [3, 6, 9],  # Columns
+    [1, 5, 9], [3, 5, 7]  # Diagonals
+]
 
-def press(num,r,c):
-    global click,count
-    global Xmove, Omove, move_all
-    if (click == True):
-        labelPhoto = Label(root,image=xPhoto)
-        labelPhoto.grid(row=r,column=c)
-        if num == 1:
-            btn1.set('X')
-            if (Xmove==[]):
-                btn5.set('O')
-            elif (Xmove==[2]):
-                btn3.set('O')
-            elif (Xmove==[3]):
-                btn2.set('O')
-            elif (Xmove==[4]):
-                btn7.set('O')
-            elif (Xmove==[6]):
-                btn3.set('O')
-            elif (Xmove==[7]):
-                btn4.set('O')
-            elif (Xmove==[8]):
-                btn7.set('O')
-            elif (Xmove==[9]):
-                btn4.set('O')
-            elif (Xmove==[3,9])or(Xmove==[9,3]):
-                btn4.set('O')
-            elif (Xmove==[7,9])or(Xmove==[9,7]):
-                btn2.set('O')
-            elif (Xmove==[6,9])or(Xmove==[9,6]):
-                btn7.set('O')
-            elif (Xmove==[9,8])or(Xmove==[8,9]):
-                btn3.set('O')
-            elif (Xmove==[9,2])or(Xmove==[2,9]):
-                btn7.set('O')
-            elif (Xmove==[9,4])or(Xmove==[4,9]):
-                btn3.set('O')
-            elif (Xmove==[2,6])or(Xmove==[6,2]):
-                btn7.set('O')
-            elif (Xmove==[4,8])or(Xmove==[8,4]):
-                btn3.set('O')
-            elif (Xmove==[3,7])or(Xmove==[7,3]):
-                btn4.set('O')
-            #two moves wins above this
-            elif (Xmove==[3,6])or(Xmove==[6,3]):
-                btn2.set('O')
-            elif (Xmove==[7,8])or(Xmove==[8,7]):
-                btn4.set('O')
-            elif (Xmove==[3,8])or(Xmove==[8,3]):
-                btn2.set('O')
-            elif (Xmove==[7,6])or(Xmove==[6,7]):
-                btn4.set('O')
-            elif (Xmove==[9,6,7])or(Xmove==[6,9,7]):
-                btn2.set('O')
-            elif (Xmove==[9,8,3])or(Xmove==[8,9,3]):
-                btn4.set('O')
-            elif (Xmove==[3,9,4])or(Xmove==[9,3,4]):
-                btn8.set('O')
-            elif (Xmove==[9,7,2])or(Xmove==[7,9,2]):
-                btn6.set('O')
-            #three moves wins above this
-            Xmove=[*Xmove,1]
-            print(Xmove)
-        if num == 2:
-            btn2.set('X')
-            if (Xmove==[]):
-                btn5.set('O')
-            elif (Xmove==[1]):
-                btn3.set('O')
-            elif (Xmove==[3]):
-                btn1.set('O')
-            elif (Xmove==[6]):
-                btn3.set('O')
-            elif (Xmove==[4]):
-                btn1.set('O')
-            elif (Xmove==[7]):
-                btn1.set('O')
-            elif (Xmove==[8]):
-                btn1.set('O')
-            elif (Xmove==[9]):
-                btn3.set('O')
-            elif (Xmove==[1,4])or(Xmove==[4,1]):
-                btn3.set('O')
-            elif (Xmove==[1,7])or(Xmove==[7,1]):
-                btn6.set('O')
-            elif (Xmove==[3,9])or(Xmove==[9,3]):
-                btn4.set('O')
-            elif (Xmove==[3,6])or(Xmove==[6,3]):
-                btn1.set('O')
-            elif (Xmove==[6,9])or(Xmove==[9,6]):
-                btn7.set('O')
-            elif (Xmove==[9,8])or(Xmove==[8,9]):
-                btn3.set('O')
-            elif (Xmove==[7,8])or(Xmove==[8,7]):
-                btn1.set('O')
-            elif (Xmove==[7,4])or(Xmove==[4,7]):
-                btn9.set('O')
-            elif (Xmove==[1,8])or(Xmove==[8,1]):
-                btn3.set('O')
-            elif (Xmove==[1,6])or(Xmove==[6,1]):
-                btn7.set('O')
-            elif (Xmove==[3,4])or(Xmove==[4,3]):
-                btn9.set('O')
-            elif (Xmove==[3,8])or(Xmove==[8,3]):
-                btn1.set('O')
-            elif (Xmove==[9,4])or(Xmove==[4,9]):
-                btn3.set('O')
-            elif (Xmove==[9,4])or(Xmove==[4,9]):
-                btn3.set('O')
-            elif (Xmove==[7,6])or(Xmove==[6,7]):
-                btn1.set('O')
-            elif (Xmove==[8,6])or(Xmove==[6,8]):
-                btn1.set('O')
-            elif (Xmove==[4,8])or(Xmove==[8,4]):
-                btn3.set('O')
-            elif (Xmove==[1,9])or(Xmove==[9,1]):
-                btn6.set('O')
-            elif (Xmove==[3,7])or(Xmove==[7,3]):
-                btn4.set('O')
-            elif (Xmove==[4,6])or(Xmove==[6,4]):
-                btn9.set('O')
-            #two moves wins above this
-            elif (Xmove==[9,7])or(Xmove==[7,9]):
-                btn4.set('O')
-            elif (Xmove==[8,9,3])or(Xmove==[9,8,3]):
-                btn4.set('O')
-            elif (Xmove==[7,8,1])or(Xmove==[8,7,1]):
-                btn6.set('O')
-            elif (Xmove==[1,9,6])or(Xmove==[9,1,6]):
-                btn7.set('O')
-            elif (Xmove==[3,7,4])or(Xmove==[7,3,4]):
-                btn9.set('O')
-            #three moves wins above this
-            Xmove=[*Xmove,2]
-            print(Xmove)
-            #print(type(Xmove))
-        if num == 3:
-            btn3.set('X')
-            if (Xmove==[]):
-                btn5.set('O')
-            elif (Xmove==[1]):
-                btn2.set('O')
-            elif (Xmove==[2]):
-                btn1.set('O')
-            elif (Xmove==[4]):
-                btn1.set('O')
-            elif (Xmove==[6]):
-                btn9.set('O')
-            elif (Xmove==[7]):
-                btn6.set('O')
-            elif Xmove==[8]:
-                btn9.set('O')
-            elif (Xmove==[9]):
-                btn6.set('O')
-            elif (Xmove==[1,7])or(Xmove==[7,1]):
-                btn6.set('O')
-            elif (Xmove==[7,9])or(Xmove==[9,7]):
-                btn2.set('O')
-            elif (Xmove==[7,8])or(Xmove==[8,7]):
-                btn1.set('O')
-            elif (Xmove==[7,4])or(Xmove==[4,7]):
-                btn9.set('O')
-            elif (Xmove==[7,6])or(Xmove==[6,7]):
-                btn1.set('O')
-            elif (Xmove==[7,2])or(Xmove==[2,7]):
-                btn9.set('O')
-            elif (Xmove==[2,4])or(Xmove==[4,2]):
-                btn9.set('O')
-            elif (Xmove==[8,6])or(Xmove==[6,8]):
-                btn1.set('O')
-            elif (Xmove==[1,9])or(Xmove==[9,1]):
-                btn6.set('O')
-            elif (Xmove==[2,8])or(Xmove==[8,2]):
-                btn9.set('O')
-            elif (Xmove==[4,6])or(Xmove==[6,4]):
-                btn9.set('O')
-            #two moves wins above this
-            elif (Xmove==[1,4])or(Xmove==[4,1]):
-                btn2.set('O')
-            elif (Xmove==[1,8])or(Xmove==[8,1]):
-                btn2.set('O')
-            elif (Xmove==[9,8])or(Xmove==[8,9]):
-                btn6.set('O')
-            elif (Xmove==[9,4])or(Xmove==[4,9]):
-                btn6.set('O')
-            elif (Xmove==[7,8,1])or(Xmove==[8,7,1]):
-                btn6.set('O')
-            elif (Xmove==[7,4,9])or(Xmove==[4,7,9]):
-                btn2.set('O')
-            elif (Xmove==[9,7,2])or(Xmove==[7,9,2]):
-                btn6.set('O')
-            elif (Xmove==[1,7,6])or(Xmove==[7,1,6]):
-                btn8.set('O')
-            #three moves wins above this
-            Xmove=[*Xmove,3]
-            print(Xmove)
-        if num == 4:
-            btn4.set('X')
-            if (Xmove==[]):
-                btn5.set('O')
-            elif (Xmove==[1]):
-                btn7.set('O')
-            elif (Xmove==[2]):
-                btn1.set('O')
-            elif (Xmove==[3]):
-                btn1.set('O')
-            elif (Xmove==[6]):
-                btn1.set('O')
-            elif (Xmove==[7]):
-                btn1.set('O')
-            elif (Xmove==[8]):
-                btn7.set('O')
-            elif (Xmove==[9]):
-                btn7.set('O')
-            elif (Xmove==[1,2])or(Xmove==[2,1]):
-                btn7.set('O')
-            elif (Xmove==[1,3])or(Xmove==[3,1]):
-                btn8.set('O')
-            elif (Xmove==[7,9])or(Xmove==[9,7]):
-                btn2.set('O')
-            elif (Xmove==[2,3])or(Xmove==[3,2]):
-                btn9.set('O')
-            elif (Xmove==[3,6])or(Xmove==[6,3]):
-                btn1.set('O')
-            elif (Xmove==[6,9])or(Xmove==[9,6]):
-                btn7.set('O')
-            elif (Xmove==[9,8])or(Xmove==[8,9]):
-                btn3.set('O')
-            elif (Xmove==[7,8])or(Xmove==[8,7]):
-                btn1.set('O')
-            elif (Xmove==[1,8])or(Xmove==[8,1]):
-                btn3.set('O')
-            elif (Xmove==[1,6])or(Xmove==[6,1]):
-                btn7.set('O')
-            elif (Xmove==[3,8])or(Xmove==[8,3]):
-                btn1.set('O')
-            elif (Xmove==[9,2])or(Xmove==[2,9]):
-                btn7.set('O')
-            elif (Xmove==[7,6])or(Xmove==[6,7]):
-                btn1.set('O')
-            elif (Xmove==[7,2])or(Xmove==[2,7]):
-                btn9.set('O')
-            elif (Xmove==[2,6])or(Xmove==[6,2]):
-                btn7.set('O')
-            elif (Xmove==[8,6])or(Xmove==[6,8]):
-                btn1.set('O')
-            elif (Xmove==[2,8])or(Xmove==[8,2]):
-                btn9.set('O')
-            #two moves wins above this
-            elif (Xmove==[3,9])or(Xmove==[9,3]):
-                btn2.set('O')
-            elif (Xmove==[3,7])or(Xmove==[7,3]):
-                btn1.set('O')
-            elif (Xmove==[3,6,1])or(Xmove==[6,3,1]):
-                btn8.set('O')
-            elif (Xmove==[9,6,7])or(Xmove==[6,9,7]):
-                btn2.set('O')
-            #three moves wins above this
-            Xmove=[*Xmove,4]
-            print(Xmove)
-        if num == 5:
-            btn5.set('X')
-            Xmove=num
-            btn1.set('O')
-        if num == 6:
-            btn6.set('X')
-            if Xmove==[]:
-                btn5.set('O')
-            elif (Xmove==[1]):
-                btn3.set('O')
-            elif (Xmove==[2]):
-                btn3.set('O')
-            elif Xmove==[3]:
-                btn9.set('O')
-            elif (Xmove==[4]):
-                btn1.set('O')
-            elif Xmove==[7]:
-                btn9.set('O')
-            elif Xmove==[8]:
-                btn9.set('O')
-            elif Xmove==[9]:
-                btn3.set('O')
-            elif (Xmove==[1,2])or(Xmove==[2,1]):
-                btn7.set('O')
-            elif (Xmove==[1,3])or(Xmove==[3,1]):
-                btn8.set('O')
-            elif (Xmove==[1,4])or(Xmove==[4,1]):
-                btn3.set('O')
-            elif (Xmove==[7,9])or(Xmove==[9,7]):
-                btn2.set('O')
-            elif (Xmove==[2,3])or(Xmove==[3,2]):
-                btn9.set('O')
-            elif (Xmove==[9,8])or(Xmove==[8,9]):
-                btn3.set('O')
-            elif (Xmove==[7,8])or(Xmove==[8,7]):
-                btn1.set('O')
-            elif (Xmove==[7,4])or(Xmove==[4,7]):
-                btn9.set('O')
-            elif (Xmove==[1,8])or(Xmove==[8,1]):
-                btn3.set('O')
-            elif (Xmove==[3,4])or(Xmove==[4,3]):
-                btn9.set('O')
-            elif (Xmove==[3,8])or(Xmove==[8,3]):
-                btn1.set('O')
-            elif (Xmove==[9,2])or(Xmove==[2,9]):
-                btn7.set('O')
-            elif (Xmove==[9,4])or(Xmove==[4,9]):
-                btn3.set('O')
-            elif (Xmove==[7,2])or(Xmove==[2,7]):
-                btn9.set('O')
-            elif (Xmove==[2,4])or(Xmove==[4,2]):
-                btn9.set('O')
-            elif (Xmove==[4,8])or(Xmove==[8,4]):
-                btn3.set('O')
-            elif (Xmove==[2,8])or(Xmove==[8,2]):
-                btn9.set('O')
-            #two moves wins above this
-            elif (Xmove==[1,7])or(Xmove==[7,1]):
-                btn2.set('O')
-            elif (Xmove==[1,9])or(Xmove==[9,1]):
-                btn3.set('O')
-            elif (Xmove==[1,4,3])or(Xmove==[4,1,3]):
-                btn8.set('O')
-            elif (Xmove==[7,4,9])or(Xmove==[4,7,9]):
-                btn2.set('O')
-            elif (Xmove==[3,4,9])or(Xmove==[4,3,9]):
-                btn2.set('O')
-            #three moves wins above this
-            elif (Xmove==[1,3,8])or(Xmove==[3,1,8]):
-                btn9.set('O')
-            Xmove=[*Xmove,6]
-            print(Xmove)
-        if num == 7:
-            btn7.set('X')
-            if Xmove==[]:
-                btn5.set('O')
-            elif (Xmove==[1]):
-                btn4.set('O')
-            elif (Xmove==[2]):
-                btn1.set('O')
-            elif (Xmove==[3]):
-                btn6.set('O')
-            elif (Xmove==[4]):
-                btn1.set('O')
-            elif Xmove==[6]:
-                btn9.set('O')
-            elif Xmove==[8]:
-                btn9.set('O')
-            elif Xmove==[9]:
-                btn8.set('O')
-            elif (Xmove==[1,3])or(Xmove==[3,1]):
-                btn8.set('O')
-            elif (Xmove==[3,9])or(Xmove==[9,3]):
-                btn4.set('O')
-            elif (Xmove==[2,3])or(Xmove==[3,2]):
-                btn9.set('O')
-            elif (Xmove==[3,6])or(Xmove==[6,3]):
-                btn1.set('O')
-            elif (Xmove==[3,4])or(Xmove==[4,3]):
-                btn9.set('O')
-            elif (Xmove==[3,8])or(Xmove==[8,3]):
-                btn1.set('O')
-            elif (Xmove==[2,4])or(Xmove==[4,2]):
-                btn9.set('O')
-            elif (Xmove==[8,6])or(Xmove==[6,8]):
-                btn1.set('O')
-            elif (Xmove==[1,9])or(Xmove==[9,1]):
-                btn6.set('O')
-            elif (Xmove==[2,8])or(Xmove==[8,2]):
-                btn9.set('O')
-            elif (Xmove==[4,6])or(Xmove==[6,4]):
-                btn9.set('O')
-            #two moves wins above this
-            elif (Xmove==[1,2])or(Xmove==[2,1]):
-                btn4.set('O')
-            elif (Xmove==[1,6])or(Xmove==[6,1]):
-                btn4.set('O')
-            elif (Xmove==[9,2])or(Xmove==[2,9]):
-                btn8.set('O')
-            elif (Xmove==[9,6])or(Xmove==[6,9]):
-                btn8.set('O')
-            elif (Xmove==[3,2,9])or(Xmove==[2,3,9]):
-                btn4.set('O')
-            elif (Xmove==[3,6,1])or(Xmove==[6,3,1]):
-                btn8.set('O')
-            elif (Xmove==[1,3,8])or(Xmove==[3,1,8]):
-                btn6.set('O')
-            elif (Xmove==[3,9,4])or(Xmove==[9,3,4]):
-                btn8.set('O')
-            elif (Xmove==[3,4,9])or(Xmove==[4,3,9]):
-                btn2.set('O')
-            #three moves wins above this
-            Xmove=[*Xmove,7]
-            print(Xmove)
-        if num == 8:
-            btn8.set('X')
-            if Xmove==[]:
-                btn5.set('O')
-            elif Xmove==[1]:
-                btn7.set('O')
-            elif (Xmove==[2]):
-                btn1.set('O')
-            elif Xmove==[3]:
-                btn9.set('O')
-            elif Xmove==[6]:
-                btn9.set('O')
-            elif Xmove==[7]:
-                btn9.set('O')
-            elif (Xmove==[4]):
-                btn7.set('O')
-            elif Xmove==[9]:
-                btn7.set('O')
-            elif (Xmove==[1,2])or(Xmove==[2,1]):
-                btn7.set('O')
-            elif (Xmove==[1,4])or(Xmove==[4,1]):
-                btn3.set('O')
-            elif (Xmove==[1,7])or(Xmove==[7,1]):
-                btn6.set('O')
-            elif (Xmove==[3,9])or(Xmove==[9,3]):
-                btn4.set('O')
-            elif (Xmove==[2,3])or(Xmove==[3,2]):
-                btn9.set('O')
-            elif (Xmove==[3,6])or(Xmove==[6,3]):
-                btn1.set('O')
-            elif (Xmove==[6,9])or(Xmove==[9,6]):
-                btn7.set('O')
-            elif (Xmove==[7,4])or(Xmove==[4,7]):
-                btn9.set('O')
-            elif (Xmove==[1,6])or(Xmove==[6,1]):
-                btn7.set('O')
-            elif (Xmove==[3,4])or(Xmove==[4,3]):
-                btn9.set('O')
-            elif (Xmove==[9,2])or(Xmove==[2,9]):
-                btn7.set('O')
-            elif (Xmove==[9,4])or(Xmove==[4,9]):
-                btn3.set('O')
-            elif (Xmove==[7,6])or(Xmove==[6,7]):
-                btn1.set('O')
-            elif (Xmove==[7,2])or(Xmove==[2,7]):
-                btn9.set('O')
-            elif (Xmove==[2,4])or(Xmove==[4,2]):
-                btn9.set('O')
-            elif (Xmove==[2,6])or(Xmove==[6,2]):
-                btn7.set('O')
-            elif (Xmove==[1,9])or(Xmove==[9,1]):
-                btn6.set('O')
-            elif (Xmove==[3,7])or(Xmove==[7,3]):
-                btn4.set('O')
-            elif (Xmove==[4,6])or(Xmove==[6,4]):
-                btn9.set('O')
-            #two moves wins above this
-            elif (Xmove==[1,3])or(Xmove==[3,1]):
-                btn4.set('O')
-            elif (Xmove==[1,2,7])or(Xmove==[2,1,7]):
-                btn6.set('O')
-            elif (Xmove==[3,2,9])or(Xmove==[2,3,9]):
-                btn4.set('O')
-            elif (Xmove==[1,9,6])or(Xmove==[9,1,6]):
-                btn7.set('O')
-            elif (Xmove==[3,7,4])or(Xmove==[7,3,4]):
-                btn9.set('O')
-            #three moves wins above this
-            elif (Xmove==[1,7,6])or(Xmove==[7,1,6]):
-                btn9.set('O')
-            elif (Xmove==[3,9,4])or(Xmove==[4,9,3]):
-                btn7.set('O')
-            Xmove=[*Xmove,8]
-            print(Xmove)
-        if num == 9:
-            btn9.set('X')
-            if Xmove==[]:
-                btn5.set('O')
-            elif (Xmove==[1]):
-                btn4.set('O')
-            elif (Xmove==[2]):
-                btn3.set('O')
-            elif Xmove==[3]:
-                btn6.set('O')
-            elif (Xmove==[4]):
-                btn7.set('O')
-            elif Xmove==[6]:
-                btn3.set('O')
-            elif Xmove==[7]:
-                btn8.set('O')
-            elif Xmove==[8]:
-                btn7.set('O')
-            elif (Xmove==[1,2])or(Xmove==[2,1]):
-                btn7.set('O')
-            elif (Xmove==[1,4])or(Xmove==[4,1]):
-                btn3.set('O')
-            elif (Xmove==[1,3])or(Xmove==[3,1]):
-                btn8.set('O')
-            elif (Xmove==[1,7])or(Xmove==[7,1]):
-                btn6.set('O')
-            elif (Xmove==[1,8])or(Xmove==[8,1]):
-                btn3.set('O')
-            elif (Xmove==[1,6])or(Xmove==[6,1]):
-                btn7.set('O')
-            elif (Xmove==[2,6])or(Xmove==[6,2]):
-                btn7.set('O')
-            elif (Xmove==[4,8])or(Xmove==[8,4]):
-                btn3.set('O')
-            elif (Xmove==[3,7])or(Xmove==[7,3]):
-                btn4.set('O')
-            #two moves wins above this
-            elif (Xmove==[3,2])or(Xmove==[2,3]):
-                btn6.set('O')
-            elif (Xmove==[7,4])or(Xmove==[4,7]):
-                btn8.set('O')
-            elif (Xmove==[3,4])or(Xmove==[4,3]):
-                btn6.set('O')
-            elif (Xmove==[7,2])or(Xmove==[2,7]):
-                btn8.set('O')
-            elif (Xmove==[1,4,3])or(Xmove==[4,1,3]):
-                btn8.set('O')
-            elif (Xmove==[1,2,7])or(Xmove==[2,1,7]):
-                btn6.set('O')
-            elif (Xmove==[1,3,8])or(Xmove==[3,1,8]):
-                btn6.set('O')
-            elif (Xmove==[1,7,6])or(Xmove==[7,1,6]):
-                btn8.set('O')
-            #three moves wins above this
-            Xmove=[*Xmove,9]
-            print(Xmove)
-        count+=1
-        #click = False
-        checkWin()
-    elif(click == False):
-        labelPhoto = Label(root,image=oPhoto)
-        labelPhoto.grid(row=r,column=c)
-        if num == 1:
-            (btn5.set('O'))
-        if num == 2:
-            (btn2.set('O'))
-        if num == 3:
-            (btn3.set('O'))
-        if num == 4:
-            (btn4.set('O'))
-        if num == 5:
-            (btn5.set('O'))
-        if num == 6:
-            (btn6.set('O'))
-        if num == 7:
-            (btn7.set('O'))
-        if num == 8:
-            (btn8.set('O'))
-        if num == 9:
-            (btn9.set('O'))
-        count+=1
-        click = True
-        checkWin()
-        
-def checkWin():
+# Function to check if a player has won
+def check_win(moves):
+    return any(all(pos in moves for pos in line) for line in winning_positions)
+
+# Function to check for a draw
+def check_draw():
+    return count == 9
+
+# Function to handle button presses
+def press(num):
     global click, count
-    if (btn1.get() == 'X' and btn2.get() == 'X' and btn3.get() == 'X' or
-        btn4.get() == 'X' and btn5.get() == 'X' and btn6.get() == 'X' or
-        btn7.get() == 'X' and btn8.get() == 'X' and btn9.get() == 'X' or
-        btn1.get() == 'X' and btn4.get() == 'X' and btn7.get() == 'X' or
-        btn2.get() == 'X' and btn5.get() == 'X' and btn8.get() == 'X' or
-        btn3.get() == 'X' and btn6.get() == 'X' and btn9.get() == 'X' or
-        btn1.get() == 'X' and btn5.get() == 'X' and btn9.get() == 'X' or
-        btn3.get() == 'X' and btn5.get() == 'X' and btn7.get() == 'X'):
-        tkinter.messagebox.showinfo('tic tac toe','X WINS!')
-        click = True
-        count =  0
-        clear()
-        play()
-    
-    elif (btn1.get() == 'O' and btn2.get() == 'O' and btn3.get() == 'O' or
-          btn4.get() == 'O' and btn5.get() == 'O' and btn6.get() == 'O' or
-          btn7.get() == 'O' and btn8.get() == 'O' and btn9.get() == 'O' or
-          btn1.get() == 'O' and btn4.get() == 'O' and btn7.get() == 'O' or
-          btn2.get() == 'O' and btn5.get() == 'O' and btn8.get() == 'O' or
-          btn3.get() == 'O' and btn6.get() == 'O' and btn9.get() == 'O' or
-          btn1.get() == 'O' and btn5.get() == 'O' and btn9.get() == 'O' or
-          btn3.get() == 'O' and btn5.get() == 'O' and btn7.get() == 'O'):
-        tkinter.messagebox.showinfo('tic tac toe','O WINS!')
-        click = True
-        count =  0
-        clear()
-        play()
-    
-    elif(count==5):
-        tkinter.messagebox.showinfo('tic tac toe','ITS A DRAW!')
-        count =  0
-        clear()
-        play()
 
-def clear():
-    global Xmove
-    Xmove=[]
-    btn1.set("")
-    btn2.set("")
-    btn3.set("")
-    btn4.set("")
-    btn5.set("")
-    btn6.set("")
-    btn7.set("")
-    btn8.set("")
-    btn9.set("")
+    if num not in move_all:  # Ensure the button is not already taken
+        if click:  # X's Turn
+            if xPhoto:
+                btn[num].config(image=xPhoto)
+            else:
+                btn[num].config(text='X')
+            btn[num].config(state=DISABLED)
+            Xmove.append(num)
+            move_all.append(num)
+            count += 1
+
+            if check_win(Xmove):
+                tkinter.messagebox.showinfo("Game Over", "X Wins!")
+                disable_buttons()
+                return
+            
+            if check_draw():
+                tkinter.messagebox.showinfo("Game Over", "It's a Draw!")
+                disable_buttons()
+                return
+
+            click = False  # Switch turn
+            root.after(500, ai_move)  # Delay AI move slightly for better UX
+
+# AI's move (O) - Never loses
+def ai_move():
+    global count, click
+
+    # --- Win if possible ---
+    for move in range(1, 10):
+        if move not in move_all:
+            temp_moves = Omove + [move]
+            if check_win(temp_moves):
+                place_o(move)
+                return
+
+    # --- Block X if it's about to win ---
+    for move in range(1, 10):
+        if move not in move_all:
+            temp_moves = Xmove + [move]
+            if check_win(temp_moves):
+                place_o(move)
+                return
     
-play()
+    # --- Handle special cases ---
+    # Detect the opposite corners strategy (when player has two opposite corners)
+    opposite_corners = [[1, 9], [3, 7]]
+    for corners in opposite_corners:
+        if all(corner in Xmove for corner in corners) and count == 3:
+            # If player has opposite corners and we have the center,
+            # we must take an edge (2, 4, 6, or 8) to prevent a fork
+            edges = [2, 4, 6, 8]
+            for edge in edges:
+                if edge not in move_all:
+                    place_o(edge)
+                    return
     
+    # Handle the case where player might create a fork with a corner and an edge
+    if count == 3 and 5 in Omove:
+        # Check for potential fork setups
+        corner_edge_forks = [
+            ([1, 6], 3), ([3, 4], 1), ([7, 2], 9), ([9, 8], 7),  # Corner + adjacent edge
+            ([1, 8], 7), ([3, 8], 9), ([7, 6], 1), ([9, 4], 3)   # Corner + opposite edge
+        ]
+        
+        for moves, block in corner_edge_forks:
+            if all(move in Xmove for move in moves) and block not in move_all:
+                place_o(block)
+                return
+
+    # --- Play the best strategic move ---
+    best_moves = [5, 1, 3, 7, 9, 2, 4, 6, 8]  # Prioritize center > corners > edges
+    for move in best_moves:
+        if move not in move_all:
+            place_o(move)
+            return
+
+    # If we get here and no move was made, check for draw
+    if check_draw():
+        tkinter.messagebox.showinfo("Game Over", "It's a Draw!")
+        disable_buttons()
+
+# Helper function to place 'O' (AI Move)
+def place_o(move):
+    global count, click
+    
+    Omove.append(move)
+    move_all.append(move)
+    if oPhoto:
+        btn[move].config(image=oPhoto)
+    else:
+        btn[move].config(text='O')
+    btn[move].config(state=DISABLED)
+    count += 1
+
+    if check_win(Omove):
+        tkinter.messagebox.showinfo("Game Over", "O Wins!")
+        disable_buttons()
+        return
+    
+    if check_draw():
+        tkinter.messagebox.showinfo("Game Over", "It's a Draw!")
+        disable_buttons()
+        return
+
+    click = True  # Switch turn back to X
+
+# Disable all buttons when the game ends
+def disable_buttons():
+    for i in range(1, 10):
+        btn[i].config(state=DISABLED)
+
+# Reset game function (for future use)
+def reset_game():
+    global click, count, Xmove, Omove, move_all
+    click = True
+    count = 0
+    Xmove = []
+    Omove = []
+    move_all = []
+    for i in range(1, 10):
+        if emptyPhoto:
+            btn[i].config(image=emptyPhoto)
+        else:
+            btn[i].config(text='')
+        btn[i].config(state=NORMAL)
+
+# Add a reset button
+reset_btn = Button(root, text="New Game", command=reset_game)
+reset_btn.grid(row=3, column=0, columnspan=3, sticky="nsew")
+
+# Create buttons for the Tic-Tac-Toe board
+positions = [(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)]
+for i, (row, col) in enumerate(positions, start=1):
+    if xPhoto:  # If images are available, use them
+        btn[i] = Button(root, image=emptyPhoto, width=100, height=100, command=lambda i=i: press(i))
+    else:  # Otherwise use text
+        btn[i] = Button(root, text='', width=10, height=5, command=lambda i=i: press(i))
+    btn[i].grid(row=row, column=col)
+
+# Start the game loop
 root.mainloop()
